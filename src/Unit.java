@@ -7,7 +7,7 @@ public abstract class Unit extends Existence {
     private int attackDelay;
     private Tile currentTile;
 
-    public abstract void attack();
+    public abstract void attack(Tile destinationTile);
 
     public abstract void takeDamage(int damage);
 
@@ -112,5 +112,13 @@ public abstract class Unit extends Existence {
                 return 1;
         }
         return -1;
+    }
+
+    public Tile getCurrentTile() {
+        return currentTile;
+    }
+
+    public String getTeamName() {
+        return teamName;
     }
 }
