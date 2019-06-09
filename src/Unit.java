@@ -5,11 +5,11 @@ public abstract class Unit extends Existence {
     private int hitPoint;
     private int movementDelay;
     private int attackDelay;
-    private Tile currentTile;
 
     public abstract void attack(Tile destinationTile);
-
     public abstract void takeDamage(int damage);
+
+
 
     public int getHitPoint() {
         return hitPoint;
@@ -19,61 +19,66 @@ public abstract class Unit extends Existence {
         this.hitPoint = hitPoint;
     }
 
-    public void setMovementDelay(int movementDela) {
-        this.movementDelay = movementDela;
+    public void setMovementDelay(int movementDelay) {
+        this.movementDelay = movementDelay;
     }
 
     public void setAttackDelay(int attackDelay) {
         this.attackDelay = attackDelay;
     }
 
+
+
+    /*because the units can just move forward until they reach the end of map and then turn back or they move
+    left or right as they see a tower, the method move() dont get any argument*/
     public void move() {
         if (teamName.equals("team 1")) {
-            if (currentTile.getRow() == 0) {
+            if (getCurrentTile().getRow() == 0) {
                 if (canMove("top") == 1)
-                    currentTile.setRow(currentTile.getRow() + 1);
+                    getCurrentTile().setRow(getCurrentTile().getRow() + 1);
                 else if (canMove("top") == 0){
                     if (canMove("right") == 1)
-                        currentTile.setColumn(currentTile.getColumn() + 1);
+                        getCurrentTile().setColumn(getCurrentTile().getColumn() + 1);
                     else if (canMove("left") == 1)
-                        currentTile.setColumn(currentTile.getColumn() - 1);
+                        getCurrentTile().setColumn(getCurrentTile().getColumn() - 1);
                 }
             } else{
                 if (canMove("down") == 1)
-                    currentTile.setRow(currentTile.getRow() - 1);
+                    getCurrentTile().setRow(getCurrentTile().getRow() - 1);
                 else if (canMove("down") == 0){
                     if (canMove("right") == 1)
-                        currentTile.setColumn(currentTile.getColumn() + 1);
+                        getCurrentTile().setColumn(getCurrentTile().getColumn() + 1);
                     else if (canMove("left") == 1)
-                        currentTile.setColumn(currentTile.getColumn() - 1);
+                        getCurrentTile().setColumn(getCurrentTile().getColumn() - 1);
                 }
             }
         }
         else {
-            if (currentTile.getRow() == Map.getDimension() - 1) {
+            if (getCurrentTile().getRow() == Map.getDimension() - 1) {
                 if (canMove("down") == 1)
-                    currentTile.setRow(currentTile.getRow() - 1);
+                    getCurrentTile().setRow(getCurrentTile().getRow() - 1);
                 else if (canMove("down") == 0 + 0){
                     if (canMove("right") == 1)
-                        currentTile.setColumn(currentTile.getColumn() + 1);
+                        getCurrentTile().setColumn(getCurrentTile().getColumn() + 1);
                     else if (canMove("left") == 1)
-                        currentTile.setColumn(currentTile.getColumn() - 1);
+                        getCurrentTile().setColumn(getCurrentTile().getColumn() - 1);
                 }
             } else {
                 if (canMove("top") == 1)
-                    currentTile.setRow(currentTile.getRow() + 1);
+                    getCurrentTile().setRow(getCurrentTile().getRow() + 1);
                 else if (canMove("top") == 0 + 0){
                     if (canMove("right") == 1)
-                        currentTile.setColumn(currentTile.getColumn() + 1);
+                        getCurrentTile().setColumn(getCurrentTile().getColumn() + 1);
                     else if (canMove("left") == 1)
-                        currentTile.setColumn(currentTile.getColumn() - 1);
+                        getCurrentTile().setColumn(getCurrentTile().getColumn() - 1);
                 }
             }
         }
     }
-    public int canMove(String direction) {//0 means towers, 1 means nothing, 2 means soldiers and -1 means there is a problem
-        int row = currentTile.getRow();
-        int column = currentTile.getColumn();
+
+    public int canMove(String direction) {//return: 0 means towers, 1 means nothing, 2 means soldiers and -1 means there is a problem
+        int row = getCurrentTile().getRow();
+        int column = getCurrentTile().getColumn();
         if (direction.equals("top")) {
             if (Map.getTiles()[row + 1][column].getExistence() instanceof Tower)
                 return 0;
@@ -114,9 +119,7 @@ public abstract class Unit extends Existence {
         return -1;
     }
 
-    public Tile getCurrentTile() {
-        return currentTile;
-    }
+
 
     public String getTeamName() {
         return teamName;

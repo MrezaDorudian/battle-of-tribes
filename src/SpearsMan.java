@@ -1,4 +1,5 @@
 public class SpearsMan extends Unit{
+    private String direction;
     public SpearsMan(){
         super();
         setWeapon(new Spear());
@@ -6,26 +7,28 @@ public class SpearsMan extends Unit{
         setHitPoint(3000);
         setMovementDelay(1);
         setAttackDelay(new Spear().getCoolDown());
+        if (getTeamName().equals("team 1"))
+            direction = "down";
+        else
+            direction = "top";
     }
 
     @Override
     public void attack(Tile destinationTile) {
-        int curRow = getCurrentTile().getRow();
-        int curColumn = getCurrentTile().getColumn();
-        int desRow = destinationTile.getRow();
-        int desColumn = destinationTile.getColumn();
-        if (getTeamName().equals("team 1"))
-            if (Math.abs(desColumn - curColumn) < 2 && (Math.abs(desRow - curRow) == 1 || Math.abs(desRow - curRow) == 2) && desRow > curRow)
-                if (!(destinationTile.getExistence() instanceof Tower) && destinationTile.getExistence().isAlive)
-                    ((SpearsMan) destinationTile.getExistence()).takeDamage(new Spear().getDamage());
-        else if (getTeamName().equals("team 2"))
-            if (Math.abs(desColumn - curColumn) < 2 && (Math.abs(desRow - curRow) == 1 || Math.abs(desRow - curRow) == 2) && curRow > desRow)
-                if (!(destinationTile.getExistence() instanceof Tower && destinationTile.getExistence().isAlive))
-                    ((SpearsMan) destinationTile.getExistence()).takeDamage(new Spear().getDamage());
+        if (getWeapon().canHit(destinationTile, getCurrentTile()))
+            ((Unit)destinationTile.getExistence()).takeDamage(getWeapon().getDamage());
     }
 
     @Override
     public void takeDamage(int damage) {
         setHitPoint(getHitPoint() - (damage * (100 - new Metal().getDamageReduction()) / 100));
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
     }
 }

@@ -3,7 +3,7 @@ public abstract class Weapon {
     private int coolDown;
 
 
-    public abstract boolean canHit();
+    public abstract boolean canHit(Tile destinationTile, Tile currentTile);
 
     public void setDamage(int damage) {
         this.damage = damage;
