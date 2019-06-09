@@ -1,14 +1,15 @@
-public class Tower extends Unit {
+public class Tower extends Existence {
     public Tower(){
         super();
         setArmor(new Rock());
         setWeapon(new Sling());
-        setHitPoint(1);//here '1' means infinite
-        setAttackDelay(new Sling().getCoolDown());
+//        setHitPoint(1);//here '1' means infinite
+//        setAttackDelay(new Sling().getCoolDown());
     }
 
     @Override
-    public void takeDamage(int damage) {
-        setHitPoint(getHitPoint() - (damage * (100 - new Rock().getDamageReduction()) / 100));
+    public void attack(Tile destinationTile) {
+        if (getWeapon().canHit(destinationTile, getCurrentTile()))
+            ((Unit)destinationTile.getExistence()).takeDamage(getWeapon().getDamage());
     }
 }

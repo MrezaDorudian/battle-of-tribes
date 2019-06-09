@@ -1,11 +1,13 @@
 public class MovementAction extends Action {
-    public MovementAction(Tile tile){
-        super();
-        //maqhsade sarbaz
+    private Tile destinationTile;
+    public MovementAction(Tile destinationTile, Existence existence){
+        super(existence);
+        this.destinationTile = destinationTile;
     }
 
     @Override
     public void doAction() {
-
+        if (destinationTile)
     }
+
 }

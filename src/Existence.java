@@ -33,5 +33,6 @@ public abstract class Existence {
         return weapon;
     }
 
-    public abstract void act();
+    public abstract Action act();
+    public abstract void attack(Tile destinationTile);
 }

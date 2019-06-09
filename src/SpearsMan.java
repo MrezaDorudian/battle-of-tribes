@@ -12,7 +12,6 @@ public class SpearsMan extends Unit{
         else
             direction = "top";
     }
-
     @Override
     public void attack(Tile destinationTile) {
         if (getWeapon().canHit(destinationTile, getCurrentTile()))
